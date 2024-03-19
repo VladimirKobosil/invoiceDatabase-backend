@@ -1,7 +1,7 @@
 package cz.itnetwork.service;
 
 import cz.itnetwork.dto.InvoiceDTO;
-import cz.itnetwork.dto.InvoiceStatistics;
+import cz.itnetwork.dto.InvoiceStatisticsDTO;
 import cz.itnetwork.entity.filter.InvoiceFilter;
 
 import java.util.List;
@@ -12,7 +12,7 @@ public interface InvoiceService {
 
     InvoiceDTO removeInvoice(long id);
 
-    InvoiceDTO getById(Long id);
+    InvoiceDTO getByInvoiceId(long id);
 
     public List<InvoiceDTO> getAllInvoices(InvoiceFilter invoiceFilter);
 
@@ -22,7 +22,7 @@ public interface InvoiceService {
 
     InvoiceDTO editInvoice(long id, InvoiceDTO invoiceDTO);
 
-    public List<InvoiceStatistics> getStatistics();
+    public List<InvoiceStatisticsDTO> getInvoiceStatistics();
 
 
 }

@@ -36,7 +36,6 @@ public class InvoiceEntity {
     @ManyToOne
     private PersonEntity seller;
 
-    private boolean hidden;
 
 
 }

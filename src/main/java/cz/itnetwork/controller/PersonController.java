@@ -22,7 +22,7 @@
 package cz.itnetwork.controller;
 
 import cz.itnetwork.dto.PersonDTO;
-import cz.itnetwork.dto.PersonStatistics;
+import cz.itnetwork.dto.PersonStatisticsDTO;
 import cz.itnetwork.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,39 +36,39 @@ public class PersonController {
     @Autowired
     private PersonService personService;
 
-    // Metoda pro přidání nové osoby
     @PostMapping("/persons")
     public PersonDTO addPerson(@RequestBody PersonDTO personDTO) {
+
         return personService.addPerson(personDTO);
     }
 
-    // Metoda pro získání všech osob
     @GetMapping("/persons")
     public List<PersonDTO> getPersons() {
+
         return personService.getAllPersons();
     }
 
-    // Metoda pro odstranění osoby podle ID
     @DeleteMapping("/persons/{personId}")
     public void deletePerson(@PathVariable Long personId) {
+
         personService.removePerson(personId);
     }
 
-    // Metoda pro získání osoby podle ID
     @GetMapping("/persons/{personId}")
     public PersonDTO getPerson(@PathVariable Long personId) {
+
         return personService.getPerson(personId);
     }
 
-    // Metoda pro úpravu existující osoby
     @PutMapping({"/persons/{personId}"})
     public PersonDTO editPerson(@PathVariable Long personId, @RequestBody PersonDTO personDTO) {
+
         return personService.editPerson(personId, personDTO);
     }
 
-    // Metoda pro získání statistik osob
     @GetMapping("/persons/statistics")
-    public List<PersonStatistics> getStatistics() {
+    public List<PersonStatisticsDTO> getStatistics() {
+
         return personService.getPersonStatistics();
     }
 }

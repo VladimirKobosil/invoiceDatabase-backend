@@ -77,7 +77,7 @@ public class PersonEntity {
     private boolean hidden = false;
 
     @OneToMany(mappedBy = "buyer")
-    private List<InvoiceEntity> purchase;
+    private List<InvoiceEntity> purchases;
 
     @OneToMany(mappedBy = "seller")
     private List<InvoiceEntity> sales;

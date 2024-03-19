@@ -32,7 +32,6 @@ public interface InvoiceMapper {
      * @return aktualizovaná faktura v podobě entity
      */
     @Mapping(target = "buyer", ignore = true) // Ignorování mapování kupujícího
-    @Mapping(target = "seller", ignore = true)
-    // Ignorování mapování prodávajícího
+    @Mapping(target = "seller", ignore = true)// Ignorování mapování prodávajícího
     InvoiceEntity updateEntity(InvoiceDTO source, @MappingTarget InvoiceEntity target);
 }

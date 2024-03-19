@@ -1,7 +1,7 @@
 package cz.itnetwork.service;
 
 import cz.itnetwork.dto.InvoiceDTO;
-import cz.itnetwork.dto.InvoiceStatistics;
+import cz.itnetwork.dto.InvoiceStatisticsDTO;
 import cz.itnetwork.dto.mapper.InvoiceMapper;
 import cz.itnetwork.entity.InvoiceEntity;
 import cz.itnetwork.entity.PersonEntity;
@@ -57,7 +57,7 @@ public class InvoiceServiceImpl implements InvoiceService {
 
     // Metoda pro získání faktury podle ID
     @Override
-    public InvoiceDTO getById(Long id) {
+    public InvoiceDTO getByInvoiceId(long id) {
         // Nalezení faktury podle ID
         InvoiceEntity invoice = fetchInvoiceById(id);
         // Mapování entity na DTO a návrat
@@ -65,13 +65,8 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     // Privátní metoda pro načtení faktury podle ID
-    private InvoiceEntity fetchInvoiceById(long id) {
-        // Nalezení faktury podle ID nebo vyhození výjimky, pokud není nalezena
-        return invoiceRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Invoice with id " + id + " wasn't found in the database."));
-    }
-
     // Metoda pro získání všech faktur s možností filtru
+
     @Override
     public List<InvoiceDTO> getAllInvoices(InvoiceFilter invoiceFilter) {
         // Vytvoření specifikace filtru faktury
@@ -82,8 +77,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .map(b -> invoiceMapper.toDTO(b))
                 .collect(Collectors.toList());
     }
-
     // Metoda pro nalezení vydaných faktur podle identifikačního čísla
+
     @Override
     public List<InvoiceDTO> findIssuedInvoices(String identificationNumber) {
         // Získání osob podle identifikačního čísla
@@ -96,8 +91,8 @@ public class InvoiceServiceImpl implements InvoiceService {
                 .map(i -> invoiceMapper.toDTO(i))
                 .collect(Collectors.toList());
     }
-
     // Metoda pro nalezení přijatých faktur podle identifikačního čísla
+
     @Override
     public List<InvoiceDTO> findReceivedInvoices(String identificationNumber) {
         // Získání osob podle identifikačního čísla
@@ -105,14 +100,14 @@ public class InvoiceServiceImpl implements InvoiceService {
         // Získání seznamu přijatých faktur osob a mapování na DTO
         return persons
                 .stream()
-                .map(PersonEntity::getPurchase)
+                .map(PersonEntity::getPurchases)
                 .flatMap(Collection::stream)
                 .map(i -> invoiceMapper.toDTO(i))
                 .collect(Collectors.toList());
     }
 
     // Metoda pro mapování osob na fakturu
-    public void mapPersonsToInvoice(InvoiceEntity invoice, InvoiceDTO invoiceDTO) {
+    private void mapPersonsToInvoice(InvoiceEntity invoice, InvoiceDTO invoiceDTO) {
         // Získání prodávajícího a kupujícího a nastavení na fakturu
         PersonEntity seller = personRepository.getReferenceById(invoiceDTO.getSeller().getId());
         PersonEntity buyer = personRepository.getReferenceById(invoiceDTO.getBuyer().getId());
@@ -136,12 +131,18 @@ public class InvoiceServiceImpl implements InvoiceService {
         // Mapování entity na DTO a návrat
         return invoiceMapper.toDTO(saved);
     }
-
     // Metoda pro získání statistik faktur
+
     @Override
-    public List<InvoiceStatistics> getStatistics() {
+    public List<InvoiceStatisticsDTO> getInvoiceStatistics() {
         // Získání statistik faktur z repozitáře
         return invoiceRepository.getInvoiceStatistics();
+    }
+
+    private InvoiceEntity fetchInvoiceById(long id) {
+        // Nalezení faktury podle ID nebo vyhození výjimky, pokud není nalezena
+        return invoiceRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Invoice with id " + id + " wasn't found in the database."));
     }
 }
 

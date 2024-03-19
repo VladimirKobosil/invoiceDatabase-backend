@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class PersonStatistics {
+public class PersonStatisticsDTO {
     private Long personId;
     private String personName;
     private BigDecimal revenue;

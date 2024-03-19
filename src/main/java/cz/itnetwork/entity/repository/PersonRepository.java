@@ -21,7 +21,7 @@
  */
 package cz.itnetwork.entity.repository;
 
-import cz.itnetwork.dto.PersonStatistics;
+import cz.itnetwork.dto.PersonStatisticsDTO;
 import cz.itnetwork.entity.PersonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -49,22 +49,21 @@ public interface PersonRepository extends JpaRepository<PersonEntity, Long> {
 
     /**
      * Metoda pro získání statistik prodejců osob.
-     *
+     * <p>
      * Tento dotaz používá JPQL (Java Persistence Query Language) a vytváří nové instance třídy PersonStatistics
      * na základě součtu cen faktur za minulý a aktuální rok.
      *
      * @return Seznam objektů PersonStatistics obsahujících statistiky prodejců osob.
      */
     @Query(value = """
-        SELECT NEW cz.itnetwork.dto.PersonStatistics
-            (person.id, person.name, COALESCE(SUM(CAST(invoice.price AS java.math.BigDecimal)), 0),
-            COALESCE(SUM(CASE WHEN YEAR(invoice.issued) = YEAR(CURRENT_DATE()) - 1 THEN CAST(invoice.price AS java.math.BigDecimal) ELSE 0 END), 0))
-        FROM person person
-        LEFT JOIN invoice invoice
-        ON person.id = invoice.seller.id
-        WHERE person.hidden = 0
-        GROUP BY person.id, person.name
-        """)
-    List<PersonStatistics> getSellerStatistics();
+            SELECT NEW cz.itnetwork.dto.PersonStatisticsDTO
+                (person.id, person.name, COALESCE(SUM(CAST(invoice.price AS java.math.BigDecimal)), 0),
+                COALESCE(SUM(CASE WHEN YEAR(invoice.issued) = YEAR(CURRENT_DATE()) - 1 THEN CAST(invoice.price AS java.math.BigDecimal) ELSE 0 END), 0))
+            FROM person person
+            LEFT JOIN invoice invoice
+            ON person.id = invoice.seller.id
+            GROUP BY person.id, person.name
+            """)
+    List<PersonStatisticsDTO> getSellerStatistics();
 
 }

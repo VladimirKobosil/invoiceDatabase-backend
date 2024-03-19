@@ -12,7 +12,6 @@ public abstract class InvoiceEntity_ {
 	public static volatile SingularAttribute<InvoiceEntity, PersonEntity> seller;
 	public static volatile SingularAttribute<InvoiceEntity, String> note;
 	public static volatile SingularAttribute<InvoiceEntity, String> product;
-	public static volatile SingularAttribute<InvoiceEntity, Boolean> hidden;
 	public static volatile SingularAttribute<InvoiceEntity, Long> price;
 	public static volatile SingularAttribute<InvoiceEntity, Date> dueDate;
 	public static volatile SingularAttribute<InvoiceEntity, Integer> invoiceNumber;
@@ -24,7 +23,6 @@ public abstract class InvoiceEntity_ {
 	public static final String SELLER = "seller";
 	public static final String NOTE = "note";
 	public static final String PRODUCT = "product";
-	public static final String HIDDEN = "hidden";
 	public static final String PRICE = "price";
 	public static final String DUE_DATE = "dueDate";
 	public static final String INVOICE_NUMBER = "invoiceNumber";

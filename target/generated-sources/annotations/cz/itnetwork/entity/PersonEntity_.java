@@ -17,7 +17,7 @@ public abstract class PersonEntity_ {
 	public static volatile SingularAttribute<PersonEntity, String> mail;
 	public static volatile SingularAttribute<PersonEntity, Boolean> hidden;
 	public static volatile SingularAttribute<PersonEntity, String> city;
-	public static volatile ListAttribute<PersonEntity, InvoiceEntity> purchase;
+	public static volatile ListAttribute<PersonEntity, InvoiceEntity> purchases;
 	public static volatile SingularAttribute<PersonEntity, String> taxNumber;
 	public static volatile SingularAttribute<PersonEntity, String> telephone;
 	public static volatile SingularAttribute<PersonEntity, String> accountNumber;
@@ -35,7 +35,7 @@ public abstract class PersonEntity_ {
 	public static final String MAIL = "mail";
 	public static final String HIDDEN = "hidden";
 	public static final String CITY = "city";
-	public static final String PURCHASE = "purchase";
+	public static final String PURCHASES = "purchases";
 	public static final String TAX_NUMBER = "taxNumber";
 	public static final String TELEPHONE = "telephone";
 	public static final String ACCOUNT_NUMBER = "accountNumber";

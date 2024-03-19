@@ -22,7 +22,7 @@
 package cz.itnetwork.service;
 
 import cz.itnetwork.dto.PersonDTO;
-import cz.itnetwork.dto.PersonStatistics;
+import cz.itnetwork.dto.PersonStatisticsDTO;
 import cz.itnetwork.dto.mapper.PersonMapper;
 import cz.itnetwork.entity.PersonEntity;
 import cz.itnetwork.entity.repository.PersonRepository;
@@ -89,10 +89,7 @@ public class PersonServiceImpl implements PersonService {
     // Metoda pro úpravu osoby
     @Override
     public PersonDTO editPerson(Long personId, PersonDTO personDTO) {
-        // Kontrola existence osoby podle ID
-        if (!personRepository.existsById(personId)) {
-            throw new EntityNotFoundException("Person with id" + personId + " wasn't found in the database.");
-        }
+
         // Nalezení osoby podle ID
         PersonEntity person = fetchPersonById(personId);
         // Nastavení atributu "hidden" na true pro skrytí osoby
@@ -108,17 +105,17 @@ public class PersonServiceImpl implements PersonService {
         return personMapper.toDTO(saved);
     }
 
+    // Metoda pro získání statistik osob
+    @Override
+    public List<PersonStatisticsDTO> getPersonStatistics() {
+        // Získání statistik osob z repozitáře
+        return personRepository.getSellerStatistics();
+    }
+
     // Privátní metoda pro načtení osoby podle ID
     private PersonEntity fetchPersonById(long id) {
         // Nalezení osoby podle ID nebo vyhození výjimky, pokud není nalezena
         return personRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Person with id " + id + " wasn't found in the database."));
-    }
-
-    // Metoda pro získání statistik osob
-    @Override
-    public List<PersonStatistics> getPersonStatistics() {
-        // Získání statistik osob z repozitáře
-        return personRepository.getSellerStatistics();
     }
 }
